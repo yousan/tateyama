@@ -115,6 +115,137 @@ function tateyama_customize_register( $wp_customize ) {
 		'type'     => 'text',
 	) );
 
+	// セッティング PRセクション見出し
+	$wp_customize->add_setting( 'tateyama_options[prText]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション見出し
+	$wp_customize->add_control( 'tateyama_options_pr_text', array(
+		'settings' => 'tateyama_options[prText]',
+		'label'    => 'PRテキストを入力(10文字以内)',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'text',
+	) );
+
+	// セッティング PRセクション見出し2
+	$wp_customize->add_setting( 'tateyama_options[prText2]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション見出し2
+	$wp_customize->add_control( 'tateyama_options_pr_text2', array(
+		'settings' => 'tateyama_options[prText2]',
+		'label'    => 'PR2テキストを入力(英語など)',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'text',
+	) );
+
+	// セッティング PR画像配置タイプ
+	$wp_customize->add_setting( 'tateyama_options[prImageType]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PR画像配置タイプ
+	$wp_customize->add_control( 'tateyama_options_pr_image_type', array(
+		'settings' => 'tateyama_options[prImageType]',
+		'label'    => '画像配置タイプ',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'radio',
+		'choices'  => array(
+			'1' => '１枚',
+			'2' => '２枚',
+			'3' => '３枚（左）',
+			'4' => '３枚（右）',
+		)
+	) );
+
+	for ( $i = 1; $i <= 3; $i ++ ) {
+		// セッティング PRセクション画像
+		$wp_customize->add_setting( 'tateyama_options[prImage' . $i . ']', array(
+			'default'   => '',
+			'type'      => 'option',
+			'transport' => 'postMessage',
+		) );
+
+		// コントロール PRセクション画像
+		$wp_customize->add_control( new WP_Customize_Image_Control(
+			$wp_customize,
+			'tateyama_options_pr_image' . $i,
+			array(
+				'label'    => 'PR画像' . $i,
+				'section'  => 'tateyama_top_pr_section',
+				'settings' => 'tateyama_options[prImage' . $i . ']',
+			)
+		) );
+	}
+
+	// セッティング PRセクション本文
+	$wp_customize->add_setting( 'tateyama_options[prContext]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション本文
+	$wp_customize->add_control( 'tateyama_options_pr_context', array(
+		'settings' => 'tateyama_options[prContext]',
+		'label'    => 'PRセクション本文',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'textarea',
+	) );
+
+	// セッティング PRセクション Moreリンク
+	$wp_customize->add_setting( 'tateyama_options[prLink]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション Moreリンク
+	$wp_customize->add_control( 'tateyama_options_pr_link', array(
+		'settings' => 'tateyama_options[prLink]',
+		'label'    => 'PRセクション Moreリンクテキスト',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'text',
+	) );
+
+	// セッティング PRセクション Moreリンク
+	$wp_customize->add_setting( 'tateyama_options[prPage]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション Moreリンク
+	$wp_customize->add_control( 'tateyama_options_pr_page', array(
+		'settings' => 'tateyama_options[prPage]',
+		'label'    => 'PRセクション Moreリンク固定ページ',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'dropdown-pages',
+	) );
+
+	// セッティング PRセクション Moreリンク
+	$wp_customize->add_setting( 'tateyama_options[prUrl]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール PRセクション Moreリンク
+	$wp_customize->add_control( 'tateyama_options_pr_url', array(
+		'settings' => 'tateyama_options[prUrl]',
+		'label'    => 'PRセクション MoreリンクURL',
+		'section'  => 'tateyama_top_pr_section',
+		'type'     => 'text',
+	) );
+
 	// セッティング トップページフッター住所
 	$wp_customize->add_setting( 'tateyama_options[footerAddress]', array(
 		'default'   => '',
@@ -198,17 +329,11 @@ function tateyama_customize_register( $wp_customize ) {
 	) );
 
 	// コントロール トップページフッター固定ページ選択
-	$pages        = get_pages();
-	$page_options = array( '' => '' );
-	foreach ( $pages as $page ) {
-		$page_options[ $page->ID ] = $page->post_title;
-	}
 	$wp_customize->add_control( 'tateyama_options_footer_contact_page_id', array(
 		'settings' => 'tateyama_options[footerContactPageId]',
 		'label'    => 'フッターお問い合わせ(固定ページから選択)',
 		'section'  => 'tateyama_top_footer_section',
-		'type'     => 'select',
-		'choices'  => $page_options
+		'type'     => 'dropdown-pages',
 	) );
 
 	// セッティング トップページフッターお問い合わせリンクURL
