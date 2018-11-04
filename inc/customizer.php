@@ -131,16 +131,16 @@ function tateyama_customize_register( $wp_customize ) {
 	) );
 
 	// セッティング PRセクション見出し2
-	$wp_customize->add_setting( 'tateyama_options[prText2]', array(
+	$wp_customize->add_setting( 'tateyama_options[prSubText]', array(
 		'default'   => '',
 		'type'      => 'option',
 		'transport' => 'postMessage',
 	) );
 
 	// コントロール PRセクション見出し2
-	$wp_customize->add_control( 'tateyama_options_pr_text2', array(
-		'settings' => 'tateyama_options[prText2]',
-		'label'    => 'PR2テキストを入力(英語など)',
+	$wp_customize->add_control( 'tateyama_options_pr_subtext', array(
+		'settings' => 'tateyama_options[prSubText]',
+		'label'    => 'PRテキストを入力(英語など)',
 		'section'  => 'tateyama_top_pr_section',
 		'type'     => 'text',
 	) );
@@ -196,7 +196,7 @@ function tateyama_customize_register( $wp_customize ) {
 	// コントロール PRセクション本文
 	$wp_customize->add_control( 'tateyama_options_pr_context', array(
 		'settings' => 'tateyama_options[prContext]',
-		'label'    => 'PRセクション本文',
+		'label'    => 'PR本文',
 		'section'  => 'tateyama_top_pr_section',
 		'type'     => 'textarea',
 	) );
@@ -211,7 +211,7 @@ function tateyama_customize_register( $wp_customize ) {
 	// コントロール PRセクション Moreリンク
 	$wp_customize->add_control( 'tateyama_options_pr_link', array(
 		'settings' => 'tateyama_options[prLink]',
-		'label'    => 'PRセクション Moreリンクテキスト',
+		'label'    => 'Moreリンクテキスト',
 		'section'  => 'tateyama_top_pr_section',
 		'type'     => 'text',
 	) );
@@ -226,7 +226,7 @@ function tateyama_customize_register( $wp_customize ) {
 	// コントロール PRセクション Moreリンク
 	$wp_customize->add_control( 'tateyama_options_pr_page', array(
 		'settings' => 'tateyama_options[prPage]',
-		'label'    => 'PRセクション Moreリンク固定ページ',
+		'label'    => 'Moreリンク固定ページ',
 		'section'  => 'tateyama_top_pr_section',
 		'type'     => 'dropdown-pages',
 	) );
@@ -241,9 +241,193 @@ function tateyama_customize_register( $wp_customize ) {
 	// コントロール PRセクション Moreリンク
 	$wp_customize->add_control( 'tateyama_options_pr_url', array(
 		'settings' => 'tateyama_options[prUrl]',
-		'label'    => 'PRセクション MoreリンクURL',
+		'label'    => 'MoreリンクURL',
 		'section'  => 'tateyama_top_pr_section',
 		'type'     => 'text',
+	) );
+	for ( $i = 1; $i <= 2; $i ++ ) {
+		// セッティング Informationセクション 固定ページ選択
+		$wp_customize->add_setting( 'tateyama_options[info' . $i . 'Page]', array(
+			'default'   => '',
+			'type'      => 'option',
+			'transport' => 'postMessage',
+		) );
+
+		// コントロール Informationセクション 固定ページ選択
+		$wp_customize->add_control( 'tateyama_options_info' . $i . '_page', array(
+			'settings' => 'tateyama_options[info' . $i . 'Page]',
+			'label'    => 'Information' . $i . ' 固定ページ選択',
+			'section'  => 'tateyama_top_info_section',
+			'type'     => 'dropdown-pages',
+		) );
+
+		// セッティング Informationセクション タイトル
+		$wp_customize->add_setting( 'tateyama_options[info' . $i . 'Title]', array(
+			'default'   => '',
+			'type'      => 'option',
+			'transport' => 'postMessage',
+		) );
+
+		// コントロール Informationセクション タイトル
+		$wp_customize->add_control( 'tateyama_options_info' . $i . '_title', array(
+			'settings' => 'tateyama_options[info' . $i . 'Title]',
+			'label'    => 'Information' . $i . ' タイトル（入力ない場合固定ページのタイトルを適用）',
+			'section'  => 'tateyama_top_info_section',
+			'type'     => 'text',
+		) );
+
+		// セッティング Informationセクション サブタイトル
+		$wp_customize->add_setting( 'tateyama_options[info' . $i . 'SubTitle]', array(
+			'default'   => '',
+			'type'      => 'option',
+			'transport' => 'postMessage',
+		) );
+
+		// コントロール Informationセクション サブタイトル
+		$wp_customize->add_control( 'tateyama_options_info' . $i . '_subtitle', array(
+			'settings' => 'tateyama_options[info' . $i . 'SubTitle]',
+			'label'    => 'Information' . $i . ' サブタイトル（英語表記など）',
+			'section'  => 'tateyama_top_info_section',
+			'type'     => 'text',
+		) );
+
+		// セッティング Informationセクション 背景画像
+		$wp_customize->add_setting( 'tateyama_options[info' . $i . 'Image]', array(
+			'default'   => '',
+			'type'      => 'option',
+			'transport' => 'postMessage',
+		) );
+
+		// コントロール Informationセクション 背景画像
+		$wp_customize->add_control( new WP_Customize_Image_Control(
+			$wp_customize,
+			'tateyama_options_info' . $i . '_image',
+			array(
+				'label'    => 'Informationセクション' . $i . ' 背景画像（入力ない場合固定ページのアイキャッチを適用）',
+				'section'  => 'tateyama_top_info_section',
+				'settings' => 'tateyama_options[info' . $i . 'Image]',
+			)
+		) );
+	}
+
+	// セッティング Informationセクション アーカイブタイプ選択
+	$wp_customize->add_setting( 'tateyama_options[infoArchiveType]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション アーカイブタイプ選択
+	$wp_customize->add_control( 'tateyama_options_info_archive_type', array(
+		'settings' => 'tateyama_options[infoArchiveType]',
+		'label'    => 'アーカイブタイプ選択',
+		'section'  => 'tateyama_top_info_section',
+		'type'     => 'radio',
+		'choices'  => array(
+			'1' => 'カテゴリーを利用',
+			'2' => 'カスタム投稿を利用',
+		)
+	) );
+
+	$category_options = array(
+		'' => ''
+	);
+	foreach ( get_categories() as $category ) {
+		$category_options[ $category->term_id ] = $category->name;
+	}
+
+	// セッティング Informationセクション カテゴリの選択
+	$wp_customize->add_setting( 'tateyama_options[infoCategory]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション カテゴリの選択
+	$wp_customize->add_control( 'tateyama_options_info_category', array(
+		'settings' => 'tateyama_options[infoCategory]',
+		'label'    => 'カテゴリの選択',
+		'section'  => 'tateyama_top_info_section',
+		'type'     => 'select',
+		'choices'  => $category_options
+	) );
+
+	$post_types = get_post_types(
+		array(
+			'public'   => true,
+			'_builtin' => false
+		),
+		'objects'
+	);
+	$pos_type_options = array(
+		'' => ''
+	);
+	foreach ( $post_types as $post_type ) {
+		$pos_type_options[ $post_type->name ] = __($post_type->label);
+	}
+
+	// セッティング Informationセクション カテゴリの選択
+	$wp_customize->add_setting( 'tateyama_options[infoPostType]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション カテゴリの選択
+	$wp_customize->add_control( 'tateyama_options_info_post_type', array(
+		'settings' => 'tateyama_options[infoPostType]',
+		'label'    => 'カスタム投稿の選択',
+		'section'  => 'tateyama_top_info_section',
+		'type'     => 'select',
+		'choices'  => $pos_type_options
+	) );
+
+	// セッティング Informationセクション アーカイブタイトル
+	$wp_customize->add_setting( 'tateyama_options[infoArchiveTitle]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション アーカイブタイトル
+	$wp_customize->add_control( 'tateyama_options_info_archive_title', array(
+		'settings' => 'tateyama_options[infoArchiveTitle]',
+		'label'    => 'アーカイブタイトル（入力ない場合、選択したアーカイブタイトルを適用）',
+		'section'  => 'tateyama_top_info_section',
+		'type'     => 'text',
+	) );
+
+	// セッティング Informationセクション アーカイブサブタイトル
+	$wp_customize->add_setting( 'tateyama_options[infoArchiveSubTitle]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション アーカイブサブタイトル
+	$wp_customize->add_control( 'tateyama_options_info_archive_subtitle', array(
+		'settings' => 'tateyama_options[infoArchiveSubTitle]',
+		'label'    => 'アーカイブサブタイトル（英語表記など）',
+		'section'  => 'tateyama_top_info_section',
+		'type'     => 'text',
+	) );
+
+	// セッティング Informationセクション アーカイブ背景画像
+	$wp_customize->add_setting( 'tateyama_options[infoArchiveImage]', array(
+		'default'   => '',
+		'type'      => 'option',
+		'transport' => 'postMessage',
+	) );
+
+	// コントロール Informationセクション アーカイブ背景画像
+	$wp_customize->add_control( new WP_Customize_Image_Control(
+		$wp_customize,
+		'tateyama_options_info_archive_image',
+		array(
+			'label'    => 'アーカイブ背景画像',
+			'section'  => 'tateyama_top_info_section',
+			'settings' => 'tateyama_options[infoArchiveImage]',
+		)
 	) );
 
 	// セッティング トップページフッター住所
